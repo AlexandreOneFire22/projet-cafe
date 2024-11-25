@@ -3,13 +3,22 @@
         'name' => 'vendor_name/cafe',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '6df4223ed84b111a5064df5e2b569e87e0d0573c',
+        'reference' => 'd26fe5dc1e57f32a6cc3c2cdc9bca7fa2ae789dc',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.3',
+            'version' => '6.9.3.0',
+            'reference' => '2f5c94fe7493efc213f643c23b1b1c249d40f47e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'spipu/html2pdf' => array(
             'pretty_version' => 'v5.2.8',
             'version' => '5.2.8.0',
@@ -31,7 +40,7 @@
         'vendor_name/cafe' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '6df4223ed84b111a5064df5e2b569e87e0d0573c',
+            'reference' => 'd26fe5dc1e57f32a6cc3c2cdc9bca7fa2ae789dc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

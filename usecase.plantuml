@@ -1,5 +1,16 @@
 @startuml
 
+
+actor :administrateur du logiciel: as admin
+actor :salarié entreprise cliente: as salarie
+actor :entreprise cliente: as entreprise
+
+
+actor :commercial: as preparateurCommande
+actor :rédacteur: as responsable
+
+
+
 usecase (gérer compte) as UC_Gerer_Compte
 usecase (gérer catalogue) as UC_Gerer_Catalogue
 usecase (gérer entreprise cliente) as UC_Gerer_Entreprise
@@ -10,11 +21,24 @@ usecase (gérer produit) as UC_G_Produit
 usecase (gérer catégorie produit) as UC_G_Cat_Produit
 
 
+admin --> UC_MDP
+entreprise --> UC_MDP
+salarie --> UC_MDP
+preparateurCommande -up-> UC_MDP
+responsable -up-> UC_MDP
 
-actor :administrateur du logiciel: as admin
-actor :utilisateur Cafe: as userCafe
-actor :entreprise cliente: as entreprise
-actor :salarié entreprise cliente: as salarie
+admin --> UC_Gerer_Compte
+
+preparateurCommande -down-> UC_Gerer_Commande
+preparateurCommande -left-> UC_Gerer_Entreprise
+
+responsable -down-> UC_Gerer_Catalogue
+responsable -down-> UC_G_Cat_Produit
+
+salarie--> UC_G_Produit
+
+
+
 
 
 
