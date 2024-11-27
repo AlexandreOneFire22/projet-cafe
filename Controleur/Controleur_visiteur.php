@@ -23,7 +23,7 @@ switch ($action) {
 
         //Génération mot de passe provisoire :
 
-        $chaine = "ABCDEFGHIJKLMONOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@+=-*£$&<>!?\/";
+        $chaine = "ABCDEFGHIJKLMONOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         srand((double)microtime() * 1000000);
         $pass = "";
         for ($i = 0; $i < 12; $i++) {
@@ -41,8 +41,8 @@ switch ($action) {
         $mail->SMTPAuth = false; //Pas d’authentification
         $mail->SMTPAutoTLS = false; //Pas de certificat TLS
         $mail->setFrom('test@cafe.fr', 'admin');
-        $mail->addAddress($_REQUEST["email"], 'Mon client');
-        if ($mail->addReplyTo('test@labruleriecomtoise.fr', 'admin')) {
+        $mail->addAddress($_REQUEST["email"] ?? "emailPasTrouvé@gmail.com", 'Mon client');
+        if ($mail->addReplyTo('test@cafe', 'admin')) {
             $mail->Subject = 'Objet : Bonjour !';
             $mail->isHTML(false);
             $mail->Body = "Votre mot de passe temporaire est : $pass . Vous devrez modifier votre mot de passe une fois connecte.";
@@ -52,10 +52,24 @@ switch ($action) {
             } else {
                 $msg = 'Message envoyé ! Merci de nous avoir contactés.';
                 $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
+                echo    "idUtilisateur". $utilisateur["idUtilisateur"];
                 Modele_Utilisateur::Utilisateur_Modifier_motDePasse($utilisateur["idUtilisateur"],$pass);
             }
         } else {
-            $msg = 'Il doit manquer qqc !';
+            $msg = 'Je sais pas pourquoi le programme à été ici mais..... oh well ';
+
+            $mail->Subject = 'Objet : Bonjour !';
+            $mail->isHTML(false);
+            $mail->Body = "Votre mot de passe temporaire est : $pass . Vous devrez modifier votre mot de passe une fois connecte.";
+
+            if (!$mail->send()) {
+                $msg = 'Désolé, quelque chose a mal tourné. Veuillez réessayer plus tard.';
+            } else {
+                $msg = 'Message envoyé ! Merci de nous avoir contactés.';
+                $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
+                echo    "idUtilisateur". $utilisateur["idUtilisateur"];
+                Modele_Utilisateur::Utilisateur_Modifier_motDePasse($utilisateur["idUtilisateur"],$pass);
+            }
         }
         echo $msg;
 

@@ -164,13 +164,14 @@ WHERE idUtilisateur = :paramidUtilisateur');
 
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
-         $requetePreparee = $connexionPDO->prepare(
-            'UPDATE `utilisateur` 
+        $req = 'UPDATE `utilisateur` 
 SET motDePasse = :parammotDePasse
-WHERE idUtilisateur = :paramidUtilisateur');
+WHERE idUtilisateur = :paramidUtilisateur';
+         $requetePreparee = $connexionPDO->prepare($req );
         $requetePreparee->bindParam('parammotDePasse', $motDePasse);
         $requetePreparee->bindParam('paramidUtilisateur', $idUtilisateur);
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
+        echo "$req $idUtilisateur $motDePasse modification $reponse" ;
         return $reponse;
     }
 
