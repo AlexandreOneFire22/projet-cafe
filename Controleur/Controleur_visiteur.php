@@ -56,6 +56,7 @@ switch ($action) {
                 Modele_Utilisateur::Utilisateur_Modifier_motDePasse($utilisateur["idUtilisateur"],$pass);
             }
         } else {
+
             $msg = 'Je sais pas pourquoi le programme à été ici mais..... oh well ';
 
             $mail->Subject = 'Objet : Bonjour !';
