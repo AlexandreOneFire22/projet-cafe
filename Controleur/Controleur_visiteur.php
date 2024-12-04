@@ -116,7 +116,7 @@ switch ($action) {
                 $msg = 'Message envoyé ! Merci de nous avoir contactés.';
                 $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
                 echo    "idUtilisateur". $utilisateur["idUtilisateur"];
-                Modele_Jeton::Jeton_Ajouter($jeton,$utilisateur["idUtilisateur"]);
+                Modele_Jeton::Jeton_Ajouter($jeton,0,$utilisateur["idUtilisateur"]);
 
             }
         } else {
@@ -130,7 +130,7 @@ switch ($action) {
                 $msg = 'Message envoyé ! Merci de nous avoir contactés.';
                 $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
                 echo    "idUtilisateur". $utilisateur["idUtilisateur"];
-                Modele_Jeton::Jeton_Ajouter($jeton,$utilisateur["idUtilisateur"]);
+                Modele_Jeton::Jeton_Ajouter($jeton,0,$utilisateur["idUtilisateur"]);
             }
         }
         echo $msg;

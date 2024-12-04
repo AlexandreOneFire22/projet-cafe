@@ -47,10 +47,11 @@ else
 
 switch ($typeConnexion) {
     case "visiteur" :
-        //if (isset($_REQUEST["token"])){
-        //    include ""
-        //}
-        include "Controleur/Controleur_visiteur.php";
+        if (isset($_REQUEST["token"])){
+            include "Controleur/Controleur_Token.php";
+        }else{
+            include "Controleur/Controleur_visiteur.php";
+        }
         break;
     case "utilisateurCafe":
     case "administrateurLogiciel":

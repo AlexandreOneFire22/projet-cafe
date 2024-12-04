@@ -5,7 +5,7 @@ use App\Utilitaire\Singleton_ConnexionPDO;
 use PDO;
 
 class Modele_Jeton{
-    static function Jeton_Ajouter($valeur, $idUtilisateur)
+    static function Jeton_Ajouter($valeur,$codeAction, $idUtilisateur)
     {
         $nowPlusUnJour = new \DateTime("+1 day");
         $dateFin = $nowPlusUnJour->format("Y-m-d H:i:s");
@@ -13,8 +13,9 @@ class Modele_Jeton{
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $requetePreparee = $connexionPDO->prepare(' 
         insert into `token` ( id, valeur, codeAction, idUtilisateur, dateFin, utilise) 
-        VALUE ( NULL, :valeur, 0, :idUtilisateur, :dateFin, 0)');
+        VALUE ( NULL, :valeur, :codeAction, :idUtilisateur, :dateFin, 0)');
         $requetePreparee->bindParam('valeur', $valeur);
+        $requetePreparee->bindParam('codeAction', $codeAction);
         $requetePreparee->bindParam('idUtilisateur', $idUtilisateur);
         $requetePreparee->bindParam('dateFin', $dateFin );
         $reponse = $requetePreparee->execute(); //$reponse boolean sur l'état de la requête
