@@ -6,9 +6,12 @@ use App\Modele\Modele_Utilisateur;
 use App\Vue\Vue_Connexion_Formulaire_client;
 use App\Vue\Vue_Mail_Confirme;
 use App\Vue\Vue_Mail_ReinitMdp;
+use App\Vue\Vue_Mail_ReinitMdp_Token;
 use App\Vue\Vue_Menu_Administration;
 use App\Vue\Vue_Structure_BasDePage;
 use App\Vue\Vue_Structure_Entete;
+use App\Modele\Modele_Jeton;
+
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -75,10 +78,70 @@ switch ($action) {
         echo $msg;
 
 
+        $Vue->addToCorps(new Vue_Mail_Confirme());
+
+        break;
+
+
+
+
+    case "reinitmdpconfirmToken":
+
+        $octetsAleatoires = openssl_random_pseudo_bytes (256) ;
+
+        $jeton = sodium_bin2base64($octetsAleatoires, SODIUM_BASE64_VARIANT_ORIGINAL);
+
+
+        //rédaction et envoie email :
+
+
+        include "vendor/autoload.php";
+
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->Host = '127.0.0.1';
+        $mail->Port = 1025; //Port non crypté
+        $mail->SMTPAuth = false; //Pas d’authentification
+        $mail->SMTPAutoTLS = false; //Pas de certificat TLS
+        $mail->setFrom('test@cafe.fr', 'admin');
+        $mail->addAddress($_REQUEST["email"] ?? "emailPasTrouvé@gmail.com", 'Mon client');
+        if ($mail->addReplyTo('test@cafe', 'admin')) {
+            $mail->Subject = 'Objet : Bonjour !';
+            $mail->isHTML(true);
+            $mail->Body = "Veuillez cliquer sur ce lien pour réinitialiser votre mdp : <a href='http://localhost:8000/index.php?action=token&token=$jeton'> Lien à cliquer</a>";
+
+            if (!$mail->send()) {
+                $msg = 'Désolé, quelque chose a mal tourné. Veuillez réessayer plus tard.';
+            } else {
+                $msg = 'Message envoyé ! Merci de nous avoir contactés.';
+                $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
+                echo    "idUtilisateur". $utilisateur["idUtilisateur"];
+                Modele_Jeton::Jeton_Ajouter($jeton,$utilisateur["idUtilisateur"]);
+
+            }
+        } else {
+            $mail->Subject = 'Objet : Bonjour !';
+            $mail->isHTML(true);
+            $mail->Body = "Veuillez cliquer sur ce lien pour réinitialiser votre mdp : <a href='http://localhost:8000/index.php?action=token&token=$jeton'> Lien à cliquer</a>";
+
+            if (!$mail->send()) {
+                $msg = 'Désolé, quelque chose a mal tourné. Veuillez réessayer plus tard.';
+            } else {
+                $msg = 'Message envoyé ! Merci de nous avoir contactés.';
+                $utilisateur = Modele_Utilisateur::Utilisateur_Select_ParLogin($_REQUEST["email"]);
+                echo    "idUtilisateur". $utilisateur["idUtilisateur"];
+                Modele_Jeton::Jeton_Ajouter($jeton,$utilisateur["idUtilisateur"]);
+            }
+        }
+        echo $msg;
+
 
         $Vue->addToCorps(new Vue_Mail_Confirme());
 
         break;
+
+
+
 
     case "reinitmdp":
 
@@ -86,6 +149,14 @@ switch ($action) {
         $Vue->addToCorps(new Vue_Mail_ReinitMdp());
 
         break;
+
+    case "reinitmdpToken":
+
+
+        $Vue->addToCorps(new Vue_Mail_ReinitMdp_Token());
+
+        break;
+
     case "Se connecter" :
         if (isset($_REQUEST["compte"]) and isset($_REQUEST["password"])) {
             //Si tous les paramètres du formulaire sont bons

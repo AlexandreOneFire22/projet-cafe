@@ -42,8 +42,13 @@ class Vue_Connexion_Formulaire_client extends Vue_Composant
 <h1>Mot de passe perdu ?</h1>
 
 <button type='submit' id='submit' name='action' value='reinitmdp'> 
-    Réinitialiser le mdp
+    Réinitialiser le mdp par mot de passe temporaire
 </button>
+
+<button type='submit' id='submit' name='action' value='reinitmdpToken'> 
+    Réinitialiser le mdp par token
+</button>
+
 ";
 
         $str .= "

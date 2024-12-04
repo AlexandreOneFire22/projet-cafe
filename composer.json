@@ -14,7 +14,8 @@
     "ext-sodium": "*",
     "ext-curl": "*",
     "ext-pdo": "*",
-    "phpmailer/phpmailer": "^6.9"
+    "phpmailer/phpmailer": "^6.9",
+    "ext-openssl": "*"
   },
   "autoload": {
     "files": [
