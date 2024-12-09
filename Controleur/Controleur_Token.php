@@ -30,8 +30,7 @@ switch ($token["codeAction"]){
            exit();
        }
 
-       if ($action = "submitModifMDPToken"){
-           echo "pourquoi je passe là ???";
+       if ($action == "submitModifMDPToken"){
            if ($_REQUEST["NouveauPassword"] == $_REQUEST["ConfirmPassword"]) {
                $Vue->setEntete(new Vue_Structure_Entete());
                Modele_Utilisateur::Utilisateur_Modifier_motDePasse($token["idUtilisateur"], $_REQUEST["NouveauPassword"]);
