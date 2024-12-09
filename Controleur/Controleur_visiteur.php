@@ -89,7 +89,7 @@ switch ($action) {
 
         $octetsAleatoires = openssl_random_pseudo_bytes (256) ;
 
-        $jeton = sodium_bin2base64($octetsAleatoires, SODIUM_BASE64_VARIANT_ORIGINAL);
+        $jeton = urlencode(sodium_bin2base64($octetsAleatoires, SODIUM_BASE64_VARIANT_ORIGINAL));
 
 
         //rédaction et envoie email :

@@ -4,9 +4,15 @@ use App\Utilitaire\Vue_Composant;
 
 class Vue_ChangerMdp_Token extends Vue_Composant
 {
+    private $token;
+    private $msg;
 
-    private string $action;
-    private string $msg;
+
+    public function __construct($token, $msg="")
+    {
+        $this->token = $token;
+        $this->msg = $msg;
+    }
 
     function donneTexte(): string
     {
@@ -14,8 +20,8 @@ class Vue_ChangerMdp_Token extends Vue_Composant
         $str="    <form style='display: contents'>
         
 <table style='display: inline-block'> 
-
-        <input type='hidden' name='case' value='$this->case'>
+ 
+        <input type='hidden' name='token' value='$this->token'>
         <h1>Changement Mot de passe</h1>
         <tr>
         
@@ -37,9 +43,10 @@ class Vue_ChangerMdp_Token extends Vue_Composant
         <tr>
             <td>
                 
-                <button type='submit' id='submitModifMDP' name='action' value='submitModifMDP'>
+                <button type='submit' id='submitModifMDPToken' name='action' value='submitModifMDPToken'>
                  Modifier son mot de passe
                  </button>
+                 
             </td>
      </tr>
     </form>$this->msg";

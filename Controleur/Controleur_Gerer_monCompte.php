@@ -41,6 +41,8 @@ switch ($action) {
             $Vue->addToCorps(new Vue_Utilisateur_Changement_MDP("<label><b>Vous n'avez pas saisi le bon mot de passe</b></label>", "Gerer_monCompte"));
         }
         break;
+
+
     case  "SeDeconnecter":
         //L'utilisateur a cliqué sur "se déconnecter"
         session_destroy();
